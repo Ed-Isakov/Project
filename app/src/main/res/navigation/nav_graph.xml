@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/headFragment">
+
+    <fragment
+        android:id="@+id/headFragment"
+        android:name="com.example.project.HeadFragment"
+        android:label="fragment_head"
+        tools:layout="@layout/fragment_head" >
+        <action
+            android:id="@+id/action_headFragment_to_queueFragment"
+            app:destination="@id/queueFragment" />
+        <action
+            android:id="@+id/action_headFragment_to_createFragment"
+            app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_headFragment_to_downloadFragment"
+            app:destination="@id/downloadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/queueFragment"
+        android:name="com.example.project.QueueFragment"
+        android:label="queue_fragment"
+        tools:layout="@layout/fragment_queue" >
+        <action
+            android:id="@+id/action_queueFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+        <argument
+            android:name="key"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_queueFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createFragment"
+        android:name="com.example.project.CreateFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.project.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <argument
+            android:name="key"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.example.project.DownloadFragment"
+        android:label="fragment_download"
+        tools:layout="@layout/fragment_download" />
+    <fragment
+        android:id="@+id/uploadFragment"
+        android:name="com.example.project.UploadFragment"
+        android:label="fragment_upload"
+        tools:layout="@layout/fragment_upload" >
+        <argument
+            android:name="key"
+            app:argType="string" />
+    </fragment>
+</navigation>
