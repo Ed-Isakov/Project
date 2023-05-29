@@ -1,10 +1,13 @@
 package com.example.project;
 
+import static com.example.project.MainActivity.id;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,15 +69,21 @@ public class QueueFragment extends Fragment {
             Navigation.findNavController(binding.getRoot()).popBackStack();
         });
         binding.buttonNext.setOnClickListener(v -> {
-            if (!elements.isEmpty()){
+            if (!queue.adminId.equals("User"+id)){
+                Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
+            } else if (queue.toArrayList().size()>0){
                 queue.next();
                 databaseReference.child(queueKey).child("elements").setValue(queue.elements);
             }
         });
         binding.buttonUpdateElement.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("key", queueKey);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_queueFragment_to_updateFragment, bundle);
+            if (!queue.adminId.equals("User"+id)) {
+                Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("key", queueKey);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_queueFragment_to_updateFragment, bundle);
+            }
         });
         binding.buttonUpload.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

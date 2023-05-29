@@ -18,7 +18,7 @@ import com.example.project.databinding.FragmentCreateBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateFragment extends Fragment {
+public class CreateFragment extends Fragment { // Фрагмент создания очереди
     DatabaseReference databaseReference;
     @Nullable
     @Override
@@ -36,6 +36,8 @@ public class CreateFragment extends Fragment {
                 DatabaseReference pushedRef = databaseReference.child("Queues").push();
                 String pushId = pushedRef.getKey();
                 queue.id = pushId;
+                String userId = "User"+id;
+                queue.adminId = userId;
                 databaseReference.child("Queues").child(pushId).setValue(queue);
                 databaseReference.child("Users").child("User"+id).push().setValue(pushId);
                 Navigation.findNavController(binding.getRoot()).popBackStack();

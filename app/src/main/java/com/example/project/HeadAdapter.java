@@ -1,24 +1,19 @@
 package com.example.project;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.databinding.HeadItemBinding;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HeadAdapter extends RecyclerView.Adapter<HeadAdapter.HeadViewHolder> {
+public class HeadAdapter extends RecyclerView.Adapter<HeadAdapter.HeadViewHolder> { // адаптер головного фрагмента
     private final ArrayList <Queue> data;
     public HeadAdapter(ArrayList<Queue> data) {
         this.data = data;

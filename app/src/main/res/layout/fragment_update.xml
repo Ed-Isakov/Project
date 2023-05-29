@@ -4,14 +4,21 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@drawable/megaphone"
     tools:context=".UpdateFragment">
-<EditText
-    android:id="@+id/addText"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Введите элементы через пробел"
-    android:textSize="40dp"
-    android:textStyle="italic"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonBack"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_back"/>
+    <EditText
+        android:id="@+id/addText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите элемент без пробелов"
+        android:textSize="40dp"/>
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"

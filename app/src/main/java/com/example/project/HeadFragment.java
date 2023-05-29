@@ -3,22 +3,17 @@ package com.example.project;
 import static com.example.project.MainActivity.id;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.PrimaryKey;
-
 
 import com.example.project.databinding.FragmentHeadBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -26,11 +21,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
 
-public class HeadFragment extends Fragment {
+public class HeadFragment extends Fragment { // головной фрагмент
     ArrayList <String> ids;
     ArrayList <Queue> elements;
     HeadAdapter adapter;
@@ -65,6 +62,7 @@ public class HeadFragment extends Fragment {
                 queueReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!elements.isEmpty()) elements.clear();
                         for (DataSnapshot e: snapshot.getChildren()){
                             if (ids.contains(e.getKey())){
                                 elements.add(e.getValue(Queue.class));
@@ -86,15 +84,25 @@ public class HeadFragment extends Fragment {
             }
         };
         userReference.addValueEventListener(valueEventListener);
-        binding.ownId.setText("Your id is: "+id);
-        binding.buttonDownloadQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_headFragment_to_downloadFragment);
-            }
+        binding.buttonDownloadQueue.setOnClickListener(v -> {
+            scanCode();
         });
         binding.buttonNewQueue.setOnClickListener(v -> Navigation
                 .findNavController(binding.getRoot()).navigate(R.id.action_headFragment_to_createFragment));
         return binding.getRoot();
     }
+
+    private void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher <ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents()!=null && !ids.contains(result.getContents())){
+            userReference.push().setValue(result.getContents());
+        }
+    });
 }

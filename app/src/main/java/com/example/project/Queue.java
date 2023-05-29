@@ -1,10 +1,5 @@
 package com.example.project;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,12 +7,13 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 
 
-public class Queue {
+public class Queue { // Класс очереди
 
     public String queueName;
     public String date;
     public String elements;
     public String id;
+    public String adminId;
     public Queue(String queueName, String elements){
         this.queueName=queueName;
         this.date=new Date().toString();

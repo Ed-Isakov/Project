@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@drawable/megaphone"
     tools:context=".CreateFragment">
     <EditText
         android:id="@+id/queueName"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="Введите название очереди"
         android:textSize="40dp"
-        android:textStyle="italic"
+
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"/>
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="Введите элементы через пробел"
         android:textSize="40dp"
-        android:textStyle="italic"
+
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>
     <Button
