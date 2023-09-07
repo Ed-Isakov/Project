@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 
 import java.util.ArrayList;
 
@@ -52,6 +50,10 @@ public class QueueFragment extends Fragment {
                     if (e.getKey().equals(queueKey)){
                         queue = e.getValue(Queue.class);
                         elements = queue.toArrayList();
+                        if (!queue.adminId.equals("User"+id)){
+                            binding.buttonUpdateElement.hide();
+                            binding.buttonNext.hide();
+                        }
                     }
                 }
                 adapter = new QueueAdapter(elements);
@@ -70,7 +72,8 @@ public class QueueFragment extends Fragment {
         });
         binding.buttonNext.setOnClickListener(v -> {
             if (!queue.adminId.equals("User"+id)){
-                Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
+                v.setVisibility(View.GONE);
+                //Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
             } else if (queue.toArrayList().size()>0){
                 queue.next();
                 databaseReference.child(queueKey).child("elements").setValue(queue.elements);
@@ -78,7 +81,8 @@ public class QueueFragment extends Fragment {
         });
         binding.buttonUpdateElement.setOnClickListener(v -> {
             if (!queue.adminId.equals("User"+id)) {
-                Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
+                v.setVisibility(View.GONE);
+                //Toast.makeText(requireContext(), "У вас нет прав модерации", Toast.LENGTH_SHORT).show();
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("key", queueKey);
